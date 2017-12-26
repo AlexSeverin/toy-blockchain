@@ -1,0 +1,20 @@
+[block]
+	id: 1
+	time: 1514304240
+	data: initial_block
+	prev_hash: NaN
+[end]
+
+[block]
+	id: 2
+	time: 1514309843
+	data: dasha,privet
+	prev_hash: 78910b36b4efada3679ab1443f94a1a971989f462c512b767bd6e231d442f630
+[end]
+
+[block]
+	id: 3
+	time: 1514309850
+	data: dasha,privet
+	prev_hash: c671547e2d9e569858ee842d2b303dc266819e6bb27b0d53c7e38a8754a7f5c1
+[end]
