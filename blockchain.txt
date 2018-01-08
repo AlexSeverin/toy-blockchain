@@ -1,6 +1,0 @@
-[block]
-	id: 1
-	time: 1514304240
-	data: initial_block
-	prev_hash: NaN
-[end]
