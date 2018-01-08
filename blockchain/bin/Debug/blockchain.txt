@@ -1,0 +1,40 @@
+[block]
+   	id: 0
+    	time: 1514304240
+    	data: genesis_block
+    	prev_hash: null
+    	nonce: null
+    	difficulty: 0
+    	size: 180 bytes
+    	this_hash: 2132ccd67387d07f6a877bb1cedbb38dc0d80bf53f24b5f7ae067ea33a9adc6b
+[end]
+[block] 
+	id: 1
+	time: 1515428578
+	data: test-test-test
+	prev_hash: 2132ccd67387d07f6a877bb1cedbb38dc0d80bf53f24b5f7ae067ea33a9adc6b
+	nonce: Fx3QC3gdRs
+	difficulty: 16
+	size: 237 bytes
+	this_hash: 000002b872936fc7aae0605f4fb5f6a2ac34908b2ac45c3b0ed0734daa505066
+[end] 
+[block] 
+	id: 2
+	time: 1515430249
+	data: toy-transaction:[a5cd8b3e->ab609fe1]:0.0001-gold:msg='new_year_present'
+	prev_hash: 000002b872936fc7aae0605f4fb5f6a2ac34908b2ac45c3b0ed0734daa505066
+	nonce: uYvcUSQKUP
+	difficulty: 16
+	size: 300 bytes
+	this_hash: 0000adfb4e5b4ad7dcd14ef9d0b37ffa62f15fb182a6c6b25d47341f7dd0eaa9
+[end] 
+[block] 
+	id: 3
+	time: 1515430313
+	data: neujeli-eto-rabotaet?-NICHEGO_SEBE-eshyo-i-po-soketam...Vaaau!!
+	prev_hash: 0000adfb4e5b4ad7dcd14ef9d0b37ffa62f15fb182a6c6b25d47341f7dd0eaa9
+	nonce: HWHodRxgFi
+	difficulty: 16
+	size: 298 bytes
+	this_hash: 00003ae61f14a94a0f33d557745faf2515c0baf6973470c81c3cd6f6a9ba469a
+[end] 
