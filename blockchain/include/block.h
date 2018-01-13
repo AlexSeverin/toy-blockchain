@@ -14,6 +14,7 @@ using namespace std;
 struct block {
     long long id;
     long long time;
+    string user;
     string data;
     string prev_hash;
     int difficulty;

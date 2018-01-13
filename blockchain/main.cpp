@@ -7,57 +7,11 @@
 
 using namespace std;
 
-block str2block(string s){
-    block new_block;
-    string buffer;
-    stringstream s2b;
-    s2b.clear();
-    s2b << s;
-    s2b >> new_block.id;
-    s2b >> new_block.time;
-    s2b >> new_block.data;
-    s2b >> new_block.prev_hash;
-    s2b >> new_block.nonce;
-    s2b >> new_block.difficulty;
-    s2b >> new_block.bytes;
-    s2b >> new_block.this_hash;
-    return new_block;
-}
 
-string _2ws(string a){
-    string b = "";
-    for(int i = 0;i < a.length();i++){
-        if(a[i] == '$')b += ' ';
-        else b += a[i];
-    }
-    return b;
-}
-
-string block2str(block b){
-    stringstream io;
-    io.clear();
-    io << b.id << " " <<
-          b.time << " " <<
-          b.data << " " <<
-          b.prev_hash << " " <<
-          b.nonce << " " <<
-          b.difficulty << " " <<
-          b.bytes << " " <<
-          b.this_hash;
-    return io.str();
-}
-
-string ws2_(string a){
-    string b = "";
-    for(int i = 0;i < a.length();i++){
-        if(a[i] == ' ')b += '$';
-        else b += a[i];
-    }
-    return b;
-}
 
 int main(){
     block prev_block;
+
 
     ifstream* fin = new ifstream();
     ofstream* fout = new ofstream();
@@ -99,9 +53,13 @@ int main(){
             }
 
             else if(cmd == "cnt-my-dif"){
-                int coins;
-                io >> coins;
-                string a = int_to_str(coins);
+                string user;
+                io >> user;
+                if(have_yet(user) == -1)lib.push_back(new user_lib(user,0));
+
+                int ptr = have_yet(user);
+
+                string a = int_to_str((1.0 - ((double)lib[ptr]->blocks_from / (double)blocks::amount)) * 128);
                 SDLNet_TCP_Send(client,a.c_str(),a.length() + 1);
             }
 
@@ -137,10 +95,15 @@ int main(){
                 SDLNet_TCP_Send(client,ans.c_str(),ans.length() + 1);
             }
 
-            else if(cmd == "exit"){
+            else if(cmd == "exit-with-halt"){
                 SDLNet_TCP_Send(client,"ok",3);
                 SDLNet_TCP_Close(client);
                 break;
+            }
+
+            else if(cmd == "exit"){
+                SDLNet_TCP_Send(client,"ok",3);
+                SDLNet_TCP_Close(client);
             }
 
             else {
@@ -151,6 +114,10 @@ int main(){
             SDLNet_TCP_Close(client);
         }
 
+    }
+
+    for(int i = 0;i < lib.size();i++){
+        delete lib[i];
     }
 
     SDLNet_TCP_Close(server);

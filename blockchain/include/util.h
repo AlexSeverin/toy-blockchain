@@ -17,7 +17,7 @@ string rand_string(int len, long long seed){
 string generate_hash(block temp){
     stringstream io;
     io.clear();
-    io << temp.id << temp.time << temp.data << temp.prev_hash << temp.nonce << temp.difficulty << temp.bytes;
+    io << temp.id << temp.user << temp.time << temp.data << temp.prev_hash << temp.nonce << temp.difficulty << temp.bytes;
     return sha256(io.str());
 }
 
@@ -91,5 +91,56 @@ string int_to_str(long long a){
     stringstream io;
     io << a;
     return io.str();
+}
+
+block str2block(string s){
+    block new_block;
+    string buffer;
+    stringstream s2b;
+    s2b.clear();
+    s2b << s;
+    s2b >> new_block.id;
+    s2b >> new_block.user;
+    s2b >> new_block.time;
+    s2b >> new_block.data;
+    s2b >> new_block.prev_hash;
+    s2b >> new_block.nonce;
+    s2b >> new_block.difficulty;
+    s2b >> new_block.bytes;
+    s2b >> new_block.this_hash;
+    return new_block;
+}
+
+string _2ws(string a){
+    string b = "";
+    for(int i = 0;i < a.length();i++){
+        if(a[i] == '$')b += ' ';
+        else b += a[i];
+    }
+    return b;
+}
+
+string block2str(block b){
+    stringstream io;
+    io.clear();
+    io << b.id << " " <<
+          b.user << " " <<
+          b.time << " " <<
+          b.data << " " <<
+          b.prev_hash << " " <<
+          b.nonce << " " <<
+          b.difficulty << " " <<
+          b.bytes << " " <<
+          b.this_hash;
+    return io.str();
+}
+
+string ws2_(string a){
+    string b = "";
+    for(int i = 0;i < a.length();i++){
+        if(a[i] == ' ')b += '$';
+        else b += a[i];
+    }
+    return b;
 }
 

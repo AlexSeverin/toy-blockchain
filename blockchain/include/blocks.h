@@ -6,6 +6,27 @@
 
 using namespace std;
 
+#include <vector>
+
+class user_lib {
+public:
+    user_lib(string name,long long blcks){
+        blocks_from = blcks;
+        user = name;
+    }
+    string user;
+    int blocks_from;
+};
+
+vector<user_lib*> lib;
+
+int have_yet(string user){
+    for(int i = 0;i < lib.size();i++){
+        if(lib[i]->user == user)return i;
+    }
+    return -1;
+}
+
 namespace blocks {
 long long amount = 0;
 
@@ -18,6 +39,7 @@ string add(ofstream* fout,block prev_block,block new_block){
        nice_hash(new_block.this_hash) >= new_block.difficulty && new_block.bytes > 0){
        *fout << "[block] " << endl;
        *fout << "\tid: " << new_block.id << endl;
+       *fout << "\tuser: " << new_block.user << endl;
        *fout << "\ttime: " << new_block.time << endl;
        *fout << "\tdata: " << new_block.data << endl;
        *fout << "\tprev_hash: " << new_block.prev_hash << endl;
@@ -39,6 +61,7 @@ string add(ofstream* fout,block prev_block,block new_block){
 void print(block new_block){
     cout << "[block]" << endl;
     cout << "\tid: " << new_block.id << endl;
+    cout << "\tuser: " << new_block.user << endl;
     cout << "\ttime: " << new_block.time << endl;
     cout << "\tdata: " << new_block.data << endl;
     cout << "\tprev_hash: " << new_block.prev_hash << endl;
@@ -58,6 +81,7 @@ block read(ifstream* fin,long long id){
         if(fin->eof())break;
         if(buffer == "[block]"){
             *fin >> buffer >> new_block.id;
+            *fin >> buffer >> new_block.user;
             *fin >> buffer >> new_block.time;
             *fin >> buffer >> new_block.data;
             *fin >> buffer >> new_block.prev_hash;
@@ -91,6 +115,7 @@ namespace chain {
             if(fin->eof())break;
             if(buffer == "[block]"){
                 *fin >> buffer >> new_block.id;
+                *fin >> buffer >> new_block.user;
                 *fin >> buffer >> new_block.time;
                 *fin >> buffer >> new_block.data;
                 *fin >> buffer >> new_block.prev_hash;
@@ -105,6 +130,15 @@ namespace chain {
                 }
             }
             blocks::amount++;
+
+            int having = have_yet(new_block.user);
+            if(having != -1){
+                lib[having]->blocks_from++;
+            }
+            else {
+                lib.push_back(new user_lib(new_block.user,1));
+            }
+
         }
         fin->close();
         return new_block;
@@ -118,6 +152,7 @@ namespace chain {
         *fin >> buffer;
         if(buffer == "[block]"){
             *fin >> buffer >> prev_block.id;
+            *fin >> buffer >> prev_block.user;
             *fin >> buffer >> prev_block.time;
             *fin >> buffer >> prev_block.data;
             *fin >> buffer >> prev_block.prev_hash;
@@ -142,6 +177,7 @@ namespace chain {
             if(fin->eof())break;
             if(buffer == "[block]"){
                 *fin >> buffer >> new_block.id;
+                *fin >> buffer >> new_block.user;
                 *fin >> buffer >> new_block.time;
                 *fin >> buffer >> new_block.data;
                 *fin >> buffer >> new_block.prev_hash;
